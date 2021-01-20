@@ -91,7 +91,7 @@ def apa2020():
         bas = alt.Chart(df_pl).mark_bar(size=12).encode(
             x = alt.X('count(PL):Q',title='Numbers of Production Licence'),
             y = alt.Y('Partners:N', title=None,sort='-x'),
-            tooltip=['count(PL):Q','count(O/P):Q'],
+            tooltip=['O/P:N','count(PL):Q','count(O/P):Q'],
             color=alt.Color('O/P'),
             opacity=alt.condition(pts, alt.value(1.0), alt.value(0.2)),
 #            size=alt.Size('Remaining_OE:Q', legend=alt.Legend(title='Remaining Reserves in MSM³OE',orient='bottom'),
