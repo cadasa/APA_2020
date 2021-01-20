@@ -181,10 +181,11 @@ def apa2020():
             style_function = lambda x: {'fillColor': "gray", "weight": 0.1, 'color': "gray"}
             highlight_function = lambda x: {'fillColor': "black", "weight": 0.1, 'color': "black"}
             tooltip = folium.GeoJsonTooltip(fields=['PL'])
+            tooltip2 = folium.GeoJsonTooltip(fields=['PL'])
             style_function1 = lambda x: {'fillColor': "blue", "weight": 0.1, 'color': "blue"}
             highlight_function1 = lambda x: {'fillColor': "darkblue", "weight": 0.5, 'color': "darkblue"}
             tooltip1 = folium.GeoJsonTooltip(fields=['Disc./Field'])
-            folium.GeoJson(data=gdf_pl,style_function=style_function1,highlight_function =highlight_function1, tooltip=tooltip).add_to(m)
+            folium.GeoJson(data=gdf_pl,style_function=style_function1,highlight_function =highlight_function1, tooltip=tooltip2).add_to(m)
             folium.GeoJson(data=gdf_dsc,style_function=style_function,highlight_function =highlight_function, tooltip=tooltip1).add_to(m)
 #                style_function2 = lambda x: {'fillColor': "green" if x['properties']['Dctype']=='OIL' else ( "red" if x['properties']['Dctype']=='GAS' else ("orange" if x['properties']['Dctype']=='OIL/GAS' else "blue")),
 #                                            "weight": 1,
