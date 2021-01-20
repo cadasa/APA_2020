@@ -116,7 +116,7 @@ def apa2020():
 
         df_apa['Operator'] = df_apa.loc[:,'Partners']
         pl = alt.Chart(df_apa).mark_area(
-            strokeWidth=5
+            strokeWidth=10
         ).encode(
             y=alt.Y('y:Q',scale=alt.Scale(domain=(55,72.5))),
             x=alt.X('x:Q',scale=alt.Scale(domain=(0,30))),
