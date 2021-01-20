@@ -197,7 +197,7 @@ def apa2020():
 #            st.stop()
             style_function2 = lambda x: {'fillColor': "red", "weight": 0.5, 'color': "red"}
             highlight_function2 = lambda x: {'fillColor': "darkred", "weight": 1, 'color': "darkred"}
-            folium.GeoJson(data=dsc_map,style_function=style_function2,highlight_function =highlight_function2,popup=fields, tooltip=fields).add_to(m)
+            folium.GeoJson(data=dsc_map,style_function=style_function2,highlight_function =highlight_function2, tooltip=tooltip).add_to(m)
 
         # call to render Folium map in Streamlit
             minimap = MiniMap(toggle_display=True,position="topright",tile_layer="cartodbpositron",zoom_level_offset=-5,width=120, height=150)
