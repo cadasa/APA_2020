@@ -96,7 +96,7 @@ def apa2020():
 #            size=alt.Size('Remaining_OE:Q', legend=alt.Legend(title='Remaining Reserves in MSM³OE',orient='bottom'),
 #                            scale=alt.Scale(range=[10, 1000]))
         ).properties(title = 'Ownership Interests per Companies',
-            width=220,
+            width=250,
             height=450
         ).add_selection(
             pts
@@ -109,7 +109,7 @@ def apa2020():
             x=alt.X('1:Q',scale=alt.Scale(domain=(0,30)), title=None, axis=None),
             order='0:O'
             ).properties(title = 'Interactive PL Operatorship Map',
-                width=350,
+                width=400,
                 height=478
             ).interactive()
 
@@ -123,7 +123,7 @@ def apa2020():
             opacity=alt.condition(pts, alt.value(1.0), alt.value(0.2)),
             order='PL_nr:N'
             ).properties(
-                width=350,
+                width=400,
                 height=478
             ).add_selection(
                 pts
