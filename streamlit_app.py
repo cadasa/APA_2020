@@ -180,7 +180,7 @@ def apa2020():
 
             style_function = lambda x: {'fillColor': "gray", "weight": 0.1, 'color': "gray"}
             highlight_function = lambda x: {'fillColor': "black", "weight": 0.1, 'color': "black"}
-            tooltip = folium.GeoJsonTooltip(fields=['PL_nr'])
+            tooltip = folium.GeoJsonTooltip(fields=['PL'])
             style_function1 = lambda x: {'fillColor': "blue", "weight": 0.1, 'color': "blue"}
             highlight_function1 = lambda x: {'fillColor': "darkblue", "weight": 0.5, 'color': "darkblue"}
             tooltip1 = folium.GeoJsonTooltip(fields=['Disc./Field'])
