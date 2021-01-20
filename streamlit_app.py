@@ -168,7 +168,7 @@ def apa2020():
 #            gdf_dsc2 = gdf_dsc
 #            gdf_dsc = gdf_dsc.loc[gdf_dsc.loc[:,'geometry']!=None,:]
             gdf_dsc['Disc./Field'] = gdf_dsc.apply(lambda row: row.fieldName if row.fieldName else row.discName, axis=1)
-            dsc_map = gdf_pl.loc[gdf_pl.loc[:,'PL_nr']==fields,:].reset_index(drop=True)
+            dsc_map = gdf_pl.loc[gdf_pl.loc[:,'PL']==fields,:].reset_index(drop=True)
             dsc_map2 = dsc_map.iloc[0:1]
 #            st.table(dsc_map)
 #            if len(dsc_map2)!=0 :
