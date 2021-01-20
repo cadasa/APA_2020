@@ -65,7 +65,6 @@ def main():
 def apa2020():
     col1, col2,col3 = st.sidebar.beta_columns([0.9,8.1,1])
     gdf_pl,df_pl,df_coasline_no,gdf_dsc,df_apa = read_fielddata()
-    df_pl = df_pl.notnull().reset_index(drop=True)
 #    st.dataframe(df_pl)
 #    st.stop()
     plnames = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
