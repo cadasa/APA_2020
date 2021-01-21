@@ -251,7 +251,7 @@ def apa2020():
 #        col2.write(" ")
         col2.markdown(f"""**BLOCK(S):  {"".join(str(field_info['Block(s)'].to_list()[0]))}***""")
         with col2.beta_expander("OPERATOR & PARTNERS:",expanded=True):
-            col2.table(field_info[['Partners', 'O/P', '%']])
+            st.table(field_info[['Partners', 'O/P', '%']])
 #        st.stop()
 
         col1.subheader(f"""**Production License {"" .join(str(fields))}'s location**""")
