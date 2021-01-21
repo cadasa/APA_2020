@@ -249,9 +249,9 @@ def apa2020():
         field_info.index = field_info.index + 1
 #        field_info = field_info.T
 #        col2.write(" ")
-        col2.markdown(f"""***Blocks:  {"".join(str(field_info['Block(s)'].to_list()[0]))}***""")
-        col2.markdown(f"""***Operator and Partners:***""")
-        col2.table(field_info[['Partners', 'O/P', '%']])
+        col2.markdown(f"""**BLOCK(S):  {"".join(str(field_info['Block(s)'].to_list()[0]))}***""")
+        with col2.beta_expander("OPERATOR & PARTNERS:",expanded=True):
+            col2.table(field_info[['Partners', 'O/P', '%']])
 #        st.stop()
 
         col1.subheader(f"""**Production License {"" .join(str(fields))}'s location**""")
