@@ -299,7 +299,7 @@ def apa2020():
 
     # ----------------------
 def _max_width_():
-    max_width_str = f"max-width: 1900px;"
+    max_width_str = f"max-width: 1800px;"
     st.markdown(
         f"""
     <style>
