@@ -200,7 +200,7 @@ def apa2020():
 #            lat = dsc_map2.center_point.map(lambda p: p.y)
 
     # center on the middle of the field
-            m = folium.Map(width=450,height=500,location=[65.562, 17.704], tiles='cartodbpositron', zoom_start=4)
+            m = folium.Map(width=400,height=500,location=[65.562, 17.704], tiles='cartodbpositron', zoom_start=4)
 
             style_function = lambda x: {'fillColor': "gray", "weight": 0.1, 'color': "gray"}
             highlight_function = lambda x: {'fillColor': "black", "weight": 0.1, 'color': "black"}
@@ -268,7 +268,7 @@ def apa2020():
             lon = dsc_map2.center_point.map(lambda p: p.x)
             lat = dsc_map2.center_point.map(lambda p: p.y)
     # center on the middle of the field
-            m = folium.Map(width=420,height=500,location=[lat, lon], tiles='cartodbpositron', zoom_start=7)
+            m = folium.Map(width=400,height=500,location=[lat, lon], tiles='cartodbpositron', zoom_start=7)
 
             style_function = lambda x: {'fillColor': "gray", "weight": 0.1, 'color': "gray"}
             highlight_function = lambda x: {'fillColor': "black", "weight": 0.1, 'color': "black"}
