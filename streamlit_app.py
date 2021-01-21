@@ -180,7 +180,7 @@ def apa2020():
             PL_names = field_info['PL'].to_list()
             pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
             st.subheader(f"""**Data table showing all ownership interests of {"".join(r[0])}**""")
-            st.write(pl_map)
+            st.table(pl_map)
 
         with col1.beta_container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
@@ -318,7 +318,7 @@ def _max_width_():
 
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="APA-2020", page_icon='logo.jpg', layout='centered', initial_sidebar_state='auto')
+    st.set_page_config(page_title="APA-2020", page_icon='logo.jpg', layout='wide', initial_sidebar_state='auto')
     _max_width_()
 
     main()
