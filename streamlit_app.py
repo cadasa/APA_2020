@@ -249,7 +249,7 @@ def apa2020():
         field_info.index = field_info.index + 1
 #        field_info = field_info.T
 #        col2.write(" ")
-        col2.markdown(f"""BLOCK(S):  {"".join(str(field_info['Block(s)'].to_list()[0]))}""")
+        col2.markdown(f"""**BLOCK(S):  {"".join(str(field_info['Block(s)'].to_list()[0]))}**""")
         with col2.beta_expander("Operator & Partners:",expanded=True):
             st.table(field_info[['Partners', 'O/P', '%']])
 #        st.stop()
