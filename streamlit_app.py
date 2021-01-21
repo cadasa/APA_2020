@@ -299,7 +299,7 @@ def apa2020():
 
     # ----------------------
 def _max_width_():
-    max_width_str = f"max-width: 1500px;"
+    max_width_str = f"max-width: 2000px;"
     st.markdown(
         f"""
     <style>
@@ -318,7 +318,7 @@ def _max_width_():
 
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="APA-2020", page_icon='logo.jpg', layout='wide', initial_sidebar_state='auto')
+    st.set_page_config(page_title="APA-2020", page_icon='logo.jpg', layout='center', initial_sidebar_state='auto')
     _max_width_()
 
     main()
