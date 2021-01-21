@@ -179,7 +179,7 @@ def apa2020():
             field_info = df_pl.loc[(df_pl.loc[:,'Partners']==r[0]),:].reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
             pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
-            with st.beta_expander():
+            with st.beta_expander("EXPAND TO SEE DATA TABLE"):
                 st.subheader(f"""**Data table showing all ownership of {"".join(r[0])}**""")
                 pl_map.index = pl_map.index + 1
                 st.table(pl_map)
