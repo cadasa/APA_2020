@@ -180,6 +180,7 @@ def apa2020():
             PL_names = field_info['PL'].to_list()
             pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
             st.subheader(f"""**Data table showing all ownership interests of {"".join(r[0])}**""")
+            pl_map.index = pl_map.index + 1
             st.table(pl_map)
 
         with col1.beta_container():
