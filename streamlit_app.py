@@ -51,7 +51,7 @@ def main():
     apa2020()
     col1, col2,col3 = st.sidebar.beta_columns([0.5,9.0,0.5])
     col2.info(
-                    '👉 Click on each company to see all its APA-2020 PL.'
+                    '👉 Click on each company to see all of its APA-2020 PL.'
                     ' Individual PL can be viewed using the selection box above.')
     st.sidebar.markdown(
         "**Made with [NORDLYS](https://share.streamlit.io/cadasa/nordlys)**"
