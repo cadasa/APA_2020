@@ -49,10 +49,10 @@ def main():
     st.title("APA-2020: Awards in Predefined Areas 2020")
     st.sidebar.title("Navigation")
     apa2020()
-    col1, col2,col3 = st.sidebar.beta_columns([0.7,8.6,0.7])
+    col1, col2,col3 = st.sidebar.beta_columns([0.5,9.0,0.5])
     col2.info(
                     '👉 Click on each company to see all its APA-2020 PL.'
-                    ' Individual PL can be viewed using the pullout box above.')
+                    ' Individual PL can be viewed using the selection box above.')
     st.sidebar.markdown(
         "**Made with [NORDLYS](https://share.streamlit.io/cadasa/nordlys)**"
         )
@@ -64,7 +64,7 @@ def main():
     return None
 
 def apa2020():
-    col1, col2,col3 = st.sidebar.beta_columns([0.7,8.6,0.7])
+    col1, col2,col3 = st.sidebar.beta_columns([0.5,9.0,0.5])
     gdf_pl,df_pl,df_coasline_no,gdf_dsc,df_apa = read_fielddata()
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
 #    st.dataframe(df_pl)
