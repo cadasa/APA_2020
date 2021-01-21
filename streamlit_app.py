@@ -261,7 +261,7 @@ def apa2020():
 #            gdf_dsc2 = gdf_dsc
 #            gdf_dsc = gdf_dsc.loc[gdf_dsc.loc[:,'geometry']!=None,:]
             gdf_dsc['Disc./Field'] = gdf_dsc.apply(lambda row: row.fieldName if row.fieldName else row.discName, axis=1)
-            dsc_map = gdf_pl.loc[gdf_pl.loc[:,'PL_nr']==fields,:].reset_index(drop=True)
+            dsc_map = gdf_pl.loc[gdf_pl.loc[:,'PL']==fields,:].reset_index(drop=True)
             dsc_map2 = dsc_map.iloc[0:1]
 #            st.table(dsc_map)
 #            if len(dsc_map2)!=0 :
@@ -273,7 +273,7 @@ def apa2020():
 
             style_function = lambda x: {'fillColor': "gray", "weight": 0.1, 'color': "gray"}
             highlight_function = lambda x: {'fillColor': "black", "weight": 0.1, 'color': "black"}
-            tooltip = folium.GeoJsonTooltip(fields=['PL_nr'])
+            tooltip = folium.GeoJsonTooltip(fields=['PL'])
             style_function1 = lambda x: {'fillColor': "blue", "weight": 0.1, 'color': "blue"}
             highlight_function1 = lambda x: {'fillColor': "darkblue", "weight": 0.5, 'color': "darkblue"}
             tooltip1 = folium.GeoJsonTooltip(fields=['Disc./Field'])
@@ -290,7 +290,8 @@ def apa2020():
 #            st.stop()
             style_function2 = lambda x: {'fillColor': "red", "weight": 0.5, 'color': "red"}
             highlight_function2 = lambda x: {'fillColor': "darkred", "weight": 1, 'color': "darkred"}
-            folium.GeoJson(data=dsc_map,style_function=style_function2,highlight_function =highlight_function2,popup=fields, tooltip=fields).add_to(m)
+            tooltip2 = folium.GeoJsonTooltip(fields=['PL'])
+            folium.GeoJson(data=dsc_map,style_function=style_function2,highlight_function =highlight_function2, tooltip=tooltip2).add_to(m)
 
         # call to render Folium map in Streamlit
             minimap = MiniMap(toggle_display=True,position="topright",tile_layer="cartodbpositron",zoom_level_offset=-5,width=120, height=150)
