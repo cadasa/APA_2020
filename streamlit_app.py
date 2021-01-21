@@ -157,7 +157,7 @@ def apa2020():
                     y = alt.Y('Partners:N', title=None,sort='-x'),
                     tooltip=['O/P:N',
                             alt.Tooltip('count():Q',title='Numbers of licences:')],
-                    color=alt.Color('O/P',legend=alt.Legend(title='Ownership',orient='bottom-left',offset=48)),
+                    color=alt.Color('O/P',legend=alt.Legend(title='Ownership',orient='bottom-right',columns=2)),
                     opacity=alt.condition(pts, alt.value(1.0), alt.value(0.2)),
         #            size=alt.Size('Remaining_OE:Q', legend=alt.Legend(title='Remaining Reserves in MSM³OE',orient='bottom'),
         #                            scale=alt.Scale(range=[10, 1000]))
