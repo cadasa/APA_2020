@@ -22,37 +22,27 @@ def read_fielddata():
     gdf_pl.loc[gdf_pl.loc[:,'OBJECTID']==32,'PL_nr'] = '1049B'
     df_pl = pd.read_excel('apa2020_partners.xlsx')
 
-    ctr=gpd.read_file("https://github.com/simonepri/geo-maps/releases/download/v0.6.0/countries-coastline-1km.geo.json")
-    no=pd.DataFrame(ctr.loc[ctr.loc[:,'A3']=='NOR',:].reset_index(drop=True)['geometry'])
-    poly=no.geometry[0]
-    df_coasline_no = pd.DataFrame([])
-    for x, y in poly[1].exterior.coords:
-        row=pd.DataFrame([['poly_2',x,y]])
-        df_coasline_no = df_coasline_no.append(row).reset_index(drop=True)
-
-    df_apa = pd.DataFrame([])
-    for i in gdf_pl.index:
-        polygons=gdf_pl.geometry[i]
-        PL_nr = gdf_pl.PL_nr[i]
-        PL = gdf_pl.PL[i]
-        for x, y in polygons.exterior.coords:
-            row=pd.DataFrame([[PL_nr,x,y,PL]])
-            df_apa = df_apa.append(row).reset_index(drop=True)
-    df_apa = df_apa.rename(columns={0: "PL_nr",1: "x",2: "y",3: "PL"})
-    df_plo = df_pl.loc[df_pl.loc[:,'O/P']=='O',:]
-    df_apa = df_apa.merge(df_plo,"left",left_on='PL',right_on='PL',
-                indicator=False, validate='many_to_one')
-
-    return (gdf_pl,df_pl,df_coasline_no,gdf_dsc,df_apa)
+    gdf_pl2 = gpd.read_file("APA2019_offered.shp")
+    gdf_pl2 = gdf_pl2.loc[gdf_pl2.loc[:,'geometry']!=None,:]
+    gdf_pl2['PL'] = gdf_pl2['PL_nr']
+    df_pl2 = pd.read_excel('apa-2019-partners.xlsx', skiprows=[0])
+    df_pl2 = df_pl2.rename(columns={"Blocks": "Block(s)"})
+    df_pl2['PL']=df_pl2['PL'].astype(str)
+    return (gdf_dsc,gdf_pl,df_pl,gdf_pl2,df_pl2)
 
 def main():
-    st.title("APA-2020: Awards in Predefined Areas 2020")
     st.sidebar.title("Navigation")
-    apa2020()
-    col1, col2,col3 = st.sidebar.beta_columns([0.5,9.0,0.5])
+    col1, col2,col3 = st.sidebar.beta_columns([0.9,8.1,1])
+    years = col2.select_slider("Slide to select:",options=['APA-2019', 'APA-2020'],value='APA-2020')
+    if years == 'APA-2019':
+        st.title("APA-2019: Awards in Predefined Areas 2019")
+        apa2020(years)
+    else:
+        st.title("APA-2020: Awards in Predefined Areas 2020")
+        apa2020(years)
     col2.info(
                     '👉 Click on each company to see all of its APA-2020 PL.'
-                    ' Individual PL can be viewed using the select-box above.')
+                    ' Individual PL can be viewed using the select-box below.')
     st.sidebar.markdown(
         "**Made with [NORDLYS](https://share.streamlit.io/cadasa/nordlys)**"
         )
@@ -63,9 +53,20 @@ def main():
         "**Created by [KHANH NGUYEN](mailto:khanhduc@gmail.com)**")
     return None
 
-def apa2020():
-    col1, col2,col3 = st.sidebar.beta_columns([0.5,9.0,0.5])
-    gdf_pl,df_pl,df_coasline_no,gdf_dsc,df_apa = read_fielddata()
+def apa2020(years):
+    col1, col2,col3 = st.sidebar.beta_columns([0.9,8.1,1])
+    if years == 'APA-2019':
+        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2 = read_fielddata()
+        gdf_pl = gdf_pl2
+        df_pl = df_pl2
+#        st.dataframe(df_pl)
+#        st.dataframe(df_pl1)
+#        st.stop
+    else:
+        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2 = read_fielddata()
+        gdf_pl = gdf_pl1
+        df_pl = df_pl1
+
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
 #    st.dataframe(df_pl)
 #    st.stop()
@@ -80,74 +81,7 @@ def apa2020():
     plnames = all + plnames
     fields = col2.selectbox('Select Production Licences:',plnames)
     if fields == 'OVERVIEW':
-#        bin = col2.checkbox('Binned Heatmap?', False)
         st.subheader(f"""**Ownership interests of {"".join(str(len(df_pl['PL'].unique())))} production licences have been offered to {"".join(str(len(df_pl['Partners'].unique())))} companies**""")
-#        st.dataframe(df_dsc_fld)
-#        st.stop()
-#        pts = alt.selection(type="multi", fields=['Partners'])
-#        pts_y = alt.selection(type="multi", encodings=['y'])
-#        brush = alt.selection_interval(encodings=['x'])
-
-        # Top panel is scatter plot of temperature vs time
-#        bas = alt.Chart(df_pl).mark_bar(size=12).encode(
-#            x = alt.X('count(PL):Q',title='Numbers of Production Licence'),
-#            y = alt.Y('Partners:N', title=None,sort='-x'),
-#            tooltip=['O/P:N',
-#                    alt.Tooltip('count():Q',title='Numbers of licences:')],
-#            color=alt.Color('O/P'),
-#            opacity=alt.condition(pts, alt.value(1.0), alt.value(0.2)),
-#            size=alt.Size('Remaining_OE:Q', legend=alt.Legend(title='Remaining Reserves in MSM³OE',orient='bottom'),
-#                            scale=alt.Scale(range=[10, 1000]))
-#        ).properties(title = 'Ownership Interests per Companies',
-#            width=230,
-#            height=450
-#        ).add_selection(
-#            pts
-#        )
-
-#        map = alt.Chart(df_coasline_no).mark_area(
-#            strokeWidth=0.5,color='red'
-#        ).encode(
-#            y=alt.Y('2:Q',scale=alt.Scale(domain=(55,72.5)), title=None, axis=None),
-#            x=alt.X('1:Q',scale=alt.Scale(domain=(0,30)), title=None, axis=None),
-#            order='0:O'
-#            ).properties(title = 'Interactive PL Operatorship Map',
-#                width=400,
-#                height=478
-#            ).interactive()
-
-#        df_apa['Operator'] = df_apa.loc[:,'Partners']
-#        pl = alt.Chart(df_apa).mark_area(
-#            strokeWidth=0.5
-#        ).encode(
-#            y=alt.Y('y:Q',scale=alt.Scale(domain=(55,72.5))),
-#            x=alt.X('x:Q',scale=alt.Scale(domain=(0,30))),
-#            tooltip=['PL:N', 'Block(s):N',
-#                    alt.Tooltip('Partners:T', title='Operator',condition=alt.condition(alt.datum.O/P=='O')),
-#                    alt.Tooltip('%:Q', title='Percentage',condition=alt.condition(alt.datum.Partners == 'V'))
-#                    ],
-#            opacity=alt.condition(pts, alt.value(1.0), alt.value(0.2)),
-#            order='PL_nr:N'
-#            ).properties(
-#                width=400,
-#                height=478
-#            ).add_selection(
-#                pts
-#            ).interactive()
-
-#        st.markdown(
-#            """
-#            <style type='text/css'>
-#                details {
-#                    display: none;
-#                }
-#            </style>
-#        """,
-#            unsafe_allow_html=True,
-#        )
-
-#        st.altair_chart(
-#                        map+pl|bas,use_container_width=True)
         @st.cache
         def altair_bar():
             pts = alt.selection_single(encodings=["y"], name="pts")
