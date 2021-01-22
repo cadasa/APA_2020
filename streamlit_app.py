@@ -32,7 +32,7 @@ def read_fielddata():
 
 def main():
     st.sidebar.title("Navigation")
-    col1, col2,col3 = st.sidebar.beta_columns([0.9,8.1,1])
+    col1, col2,col3 = st.sidebar.beta_columns([0.5,9.0,0.5])
     years = col2.select_slider("Slide to select:",options=['APA-2019', 'APA-2020'],value='APA-2020')
     if years == 'APA-2019':
         st.title("APA-2019: Awards in Predefined Areas 2019")
@@ -54,7 +54,7 @@ def main():
     return None
 
 def apa2020(years):
-    col1, col2,col3 = st.sidebar.beta_columns([0.9,8.1,1])
+    col1, col2,col3 = st.sidebar.beta_columns([0.5,9.0,0.5])
     if years == 'APA-2019':
         gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2 = read_fielddata()
         gdf_pl = gdf_pl2
