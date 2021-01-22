@@ -36,13 +36,17 @@ def main():
     years = col2.select_slider("Slide to select:",options=['APA-2019', 'APA-2020'],value='APA-2020')
     if years == 'APA-2019':
         st.title("APA-2019: Awards in Predefined Areas 2019")
+        col2.info(
+                        '👉 Click on each company to see all of its APA-2019 PL.'
+                        ' Individual PL can be viewed using the select-box below.')
         apa2020(years)
     else:
         st.title("APA-2020: Awards in Predefined Areas 2020")
+        col2.info(
+                        '👉 Click on each company to see all of its APA-2020 PL.'
+                        ' Individual PL can be viewed using the select-box below.')
         apa2020(years)
-    col2.info(
-                    '👉 Click on each company to see all of its APA-2020 PL.'
-                    ' Individual PL can be viewed using the select-box below.')
+
     st.sidebar.markdown(
         "**Made with [NORDLYS](https://share.streamlit.io/cadasa/nordlys)**"
         )
