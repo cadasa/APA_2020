@@ -74,7 +74,7 @@ def apa2020(years):
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
     Partners_list = df_pl.groupby('PL')['Partners'].transform(lambda x: ",\n".join(x))
     Operatorship_list = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x))
-    Percentage_list = df_pl.groupby('PL')['%'].transform(lambda x: ", ".join(x))
+    Percentage_list = df_pl.groupby('PL')['%'].transform(lambda x: ", ".join(str(x)))
     df_pl['Partners_list'] = Partners_list
     df_pl['Operatorship_list'] = Operatorship_list
     df_pl['Percentage_list'] = Percentage_list
