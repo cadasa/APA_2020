@@ -118,13 +118,17 @@ def apa2020(years):
         df_pl['Ownerships'] = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x[1:]))
         df_pl['Percentages'] = df_pl.groupby('PL')['%'].transform(lambda x: ", ".join(x[1:]))
         field_info = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
-        field_info['O/P'] = field_info['Ownerships']
+        field_info['O/P'] = 'A'
         if r:
-            field_info = df_pl.loc[(df_pl.loc[:,'Partners']==r[0]),:].reset_index(drop=True)
+            field_info_o = field_info.loc[(field_info.loc[:,'Partners']==r[0]),:].reset_index(drop=True)
+            field_info_o['O/P'] = 'O'
+            field_info_p = field_info.loc[(r[0] in field_info.loc[:,'Companies']),:].reset_index(drop=True)
+            field_info_p['O/P'] = 'P'
+            field_info = pd.concat([field_info_o,field_info_p],axis=0).reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
 #            pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
         with st.beta_expander("EXPAND TO SEE DATA TABLE"):
-            st.subheader(f"""**Data table showing all ownership**""")
+            st.subheader(f"""**Data table showing all production licences**""")
             field_info.index = field_info.index + 1
             st.table(field_info[['PL','Block(s)','Partners','%','Companies','Percentages']])
 
@@ -164,8 +168,8 @@ def apa2020(years):
 
 #            folium_static(m)
 #            st.stop()
-            tooltip2 = folium.GeoJsonTooltip(fields=['PL', 'Companies','Ownerships','Percentages'],
-                                              labels=False,
+            tooltip2 = folium.GeoJsonTooltip(fields=['PL','Partners','%' 'Companies','Percentages'],
+                                              labels=True,
                                               sticky=False,
                                               toLocaleString=False)
             style_function2 = lambda x: {'fillColor': "steelblue" if x['properties']['O/P']=='O' else ("orange" if x['properties']['O/P']=='P' else "blue"),
