@@ -125,9 +125,9 @@ def apa2020(years):
             PL_names = field_info['PL'].to_list()
             pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
         with st.beta_expander("EXPAND TO SEE DATA TABLE"):
-            st.subheader(f"""**Data table showing all ownership of {"".join(r[0])}**""")
+            st.subheader(f"""**Data table showing all ownership**""")
             field_info.index = field_info.index + 1
-            st.table(field_info)
+            st.dataframe(field_info)
 
         with col1.beta_container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
