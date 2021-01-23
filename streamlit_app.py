@@ -74,7 +74,7 @@ def apa2020(years):
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
     df_pl['%']=df_pl['%'].astype(str)
     df_pl['Companies'] = df_pl.groupby('PL')['Partners'].transform(lambda x: ",\n".join(x))
-    df_pl['Operatorships'] = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x))
+    df_pl['Ownerships'] = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x))
     df_pl['Percentages'] = df_pl.groupby('PL')['%'].transform(lambda x: "%, ".join(x))
 #    st.dataframe(df_pl)
 #    st.stop()
@@ -118,7 +118,7 @@ def apa2020(years):
         PL_names = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
 #        pl_map = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
         field_info = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
-        field_info['O/P'] = field_info['Operatorships']
+        field_info['O/P'] = field_info['Ownerships']
         if r:
             field_info = df_pl.loc[(df_pl.loc[:,'Partners']==r[0]),:].reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
@@ -126,7 +126,7 @@ def apa2020(years):
         with st.beta_expander("EXPAND TO SEE DATA TABLE"):
             st.subheader(f"""**Data table showing all ownership**""")
             field_info.index = field_info.index + 1
-            st.table(field_info[['PL','Block(s)','Companies','Operatorships','Percentages']])
+            st.table(field_info[['PL','Block(s)','Companies','Ownerships','Percentages']])
 
         with col1.beta_container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
