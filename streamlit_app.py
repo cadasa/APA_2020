@@ -127,7 +127,7 @@ def apa2020(years):
         with st.beta_expander("EXPAND TO SEE DATA TABLE"):
             st.subheader(f"""**Data table showing all ownership**""")
             field_info.index = field_info.index + 1
-            st.dataframe(field_info)
+            st.table(field_info[['PL','Block(s)','Partners_list','Operatorship_list','Percentage_list']])
 
         with col1.beta_container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
