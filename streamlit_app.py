@@ -118,7 +118,7 @@ def apa2020(years):
         PL_names = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
 #        pl_map = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
         field_info = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
-        field_info['O/P'] = field_info['Operatorship_list']
+        field_info['O/P'] = field_info['Operatorships']
         if r:
             field_info = df_pl.loc[(df_pl.loc[:,'Partners']==r[0]),:].reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
