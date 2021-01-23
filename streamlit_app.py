@@ -169,7 +169,7 @@ def apa2020(years):
             tooltip2 = folium.GeoJsonTooltip(fields=['PL', 'Partners_list', 'Operatorship_list','Percentage_list'],aliases=['PL','Companies','Ownerships','Percentages'],
                                               labels=True,
                                               sticky=True,
-                                              toLocaleString=True)
+                                              toLocaleString=False)
             style_function2 = lambda x: {'fillColor': "steelblue" if x['properties']['O/P']=='O' else ("orange" if x['properties']['O/P']=='P' else "blue"),
                                             "weight": 1,
                                          'color': "steelblue" if x['properties']['O/P']=='O' else ("orange" if x['properties']['O/P']=='P' else "blue")}
