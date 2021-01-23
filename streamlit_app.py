@@ -73,9 +73,9 @@ def apa2020(years):
 
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
     df_pl['%']=df_pl['%'].astype(str)
-    df_pl['Companies'] = df_pl.groupby('PL')['Partners'].transform(lambda x: ",\n".join(x))
+    df_pl['Companies'] = df_pl.groupby('PL')['Partners'].transform(lambda x: ", ".join(x))
     df_pl['Ownerships'] = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x))
-    df_pl['Percentages'] = df_pl.groupby('PL')['%'].transform(lambda x: "%, ".join(x))
+    df_pl['Percentages'] = df_pl.groupby('PL')['%'].transform(lambda x: ", ".join(x))
 #    st.dataframe(df_pl)
 #    st.stop()
     plnames = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
@@ -97,9 +97,9 @@ def apa2020(years):
                 alt.Chart(df_pl).mark_bar(size=12).encode(
                     x = alt.X('count(PL):Q',title='Numbers of Production Licence'),
                     y = alt.Y('Partners:N', title=None,sort='-x'),
-                    tooltip=[alt.Tooltip('Partners:N',title='Company:'),
-                            alt.Tooltip('O/P:N',title='Ownership:'),
-                            alt.Tooltip('count():Q',title='Numbers of licences:')],
+                    tooltip=[alt.Tooltip('Partners:N',title='Company'),
+                            alt.Tooltip('O/P:N',title='Ownership'),
+                            alt.Tooltip('count():Q',title='Numbers of licences')],
                     color=alt.Color('O/P',legend=alt.Legend(strokeColor='black',padding=5,fillColor='white',title='Ownership',columns=2,offset=5,orient='bottom-right')),
                     opacity=alt.condition(pts, alt.value(1.0), alt.value(0.2)),
         #            size=alt.Size('Remaining_OE:Q', legend=alt.Legend(title='Remaining Reserves in MSM³OE',orient='bottom'),
@@ -165,7 +165,7 @@ def apa2020(years):
 #            folium_static(m)
 #            st.stop()
             tooltip2 = folium.GeoJsonTooltip(fields=['PL', 'Companies','Ownerships','Percentages'],
-                                              labels=True,
+                                              labels=False,
                                               sticky=False,
                                               toLocaleString=False)
             style_function2 = lambda x: {'fillColor': "steelblue" if x['properties']['O/P']=='O' else ("orange" if x['properties']['O/P']=='P' else "blue"),
