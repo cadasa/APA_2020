@@ -72,10 +72,6 @@ def apa2020(years):
         df_pl = df_pl1
 
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
-    df_pl['%']=df_pl['%'].astype(str)
-    df_pl['Companies'] = df_pl.groupby('PL')['Partners'].transform(lambda x: ", ".join(x))
-    df_pl['Ownerships'] = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x))
-    df_pl['Percentages'] = df_pl.groupby('PL')['%'].transform(lambda x: ", ".join(x))
 #    st.dataframe(df_pl)
 #    st.stop()
     plnames = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
@@ -97,7 +93,7 @@ def apa2020(years):
                 alt.Chart(df_pl).mark_bar(size=12).encode(
                     x = alt.X('count(PL):Q',title='Numbers of Production Licence'),
                     y = alt.Y('Partners:N', title=None,sort='-x'),
-                    tooltip=[alt.Tooltip('Partners:N',title='Company'),
+                    tooltip=[
                             alt.Tooltip('O/P:N',title='Ownership'),
                             alt.Tooltip('count():Q',title='Numbers of licences')],
                     color=alt.Color('O/P',legend=alt.Legend(strokeColor='black',padding=5,fillColor='white',title='Ownership',columns=2,offset=5,orient='bottom-right')),
@@ -117,6 +113,10 @@ def apa2020(years):
         r = event_dict.get("Partners")
         PL_names = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
 #        pl_map = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
+        df_pl['%']=df_pl['%'].astype(str)
+        df_pl['Companies'] = df_pl.groupby('PL')['Partners'].transform(lambda x: ", ".join(x[1:]))
+        df_pl['Ownerships'] = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x[1:]))
+        df_pl['Percentages'] = df_pl.groupby('PL')['%'].transform(lambda x: ", ".join(x[1:]))
         field_info = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
         field_info['O/P'] = field_info['Ownerships']
         if r:
@@ -126,7 +126,7 @@ def apa2020(years):
         with st.beta_expander("EXPAND TO SEE DATA TABLE"):
             st.subheader(f"""**Data table showing all ownership**""")
             field_info.index = field_info.index + 1
-            st.table(field_info[['PL','Block(s)','Companies','Ownerships','Percentages']])
+            st.table(field_info[['PL','Block(s)','Partners','%','Companies','Percentages']])
 
         with col1.beta_container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
