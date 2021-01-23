@@ -72,6 +72,12 @@ def apa2020(years):
         df_pl = df_pl1
 
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
+    Partners_list = df_pl.groupby('PL')['Partners'].transform(lambda x: ",".join([str(x.to_list())]))
+    Operatorship_list = df_pl.groupby('PL')['O/P'].transform(lambda x: ",".join([str(x.to_list())]))
+    Percentage_list = df_pl.groupby('PL')['%'].transform(lambda x: ",".join([str(x.to_list())]))
+    df_pl['Partners_list'] = Partners_list
+    df_pl['Operatorship_list'] = Operatorship_list
+    df_pl['Percentage_list'] = Percentage_list
 #    st.dataframe(df_pl)
 #    st.stop()
     plnames = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
@@ -93,7 +99,8 @@ def apa2020(years):
                 alt.Chart(df_pl).mark_bar(size=12).encode(
                     x = alt.X('count(PL):Q',title='Numbers of Production Licence'),
                     y = alt.Y('Partners:N', title=None,sort='-x'),
-                    tooltip=['O/P:N',
+                    tooltip=[alt.Tooltip('Partners:N',title='Company:'),
+                            alt.Tooltip('O/P:N',title='Ownership:'),
                             alt.Tooltip('count():Q',title='Numbers of licences:')],
                     color=alt.Color('O/P',legend=alt.Legend(strokeColor='black',padding=5,fillColor='white',title='Ownership',columns=2,offset=5,orient='bottom-right')),
                     opacity=alt.condition(pts, alt.value(1.0), alt.value(0.2)),
@@ -117,10 +124,10 @@ def apa2020(years):
             field_info = df_pl.loc[(df_pl.loc[:,'Partners']==r[0]),:].reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
             pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
-            with st.beta_expander("EXPAND TO SEE DATA TABLE"):
-                st.subheader(f"""**Data table showing all ownership of {"".join(r[0])}**""")
-                pl_map.index = pl_map.index + 1
-                st.table(pl_map)
+        with st.beta_expander("EXPAND TO SEE DATA TABLE"):
+        st.subheader(f"""**Data table showing all ownership of {"".join(r[0])}**""")
+        field_info.index = field_info.index + 1
+        st.table(field_info)
 
         with col1.beta_container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
@@ -158,16 +165,16 @@ def apa2020(years):
 
 #            folium_static(m)
 #            st.stop()
-            tooltip2 = folium.GeoJsonTooltip(fields=['PL', 'Partners', 'O/P','%'],aliases=['PL','Company','Ownership','Percentage'], 
+            tooltip2 = folium.GeoJsonTooltip(fields=['PL', 'Partners_list', 'Operatorship_list','Percentage_list'],aliases=['PL','Companies','Ownerships','Percentages'],
                                               labels=True,
                                               sticky=True,
                                               toLocaleString=True)
-            style_function2 = lambda x: {'fillColor': "steelblue" if x['properties']['O/P']=='O' else "orange",
+            style_function2 = lambda x: {'fillColor': "steelblue" if x['properties']['O/P']=='O' else ("orange" if x['properties']['O/P']=='P' else "blue"),
                                             "weight": 1,
-                                         'color': "steelblue" if x['properties']['O/P']=='O' else "orange"}
-            highlight_function2 = lambda x: {'fillColor': "steelblue" if x['properties']['O/P']=='O' else "darkorange",
+                                         'color': "steelblue" if x['properties']['O/P']=='O' else ("orange" if x['properties']['O/P']=='P' else "blue")}
+            highlight_function2 = lambda x: {'fillColor': "steelblue" if x['properties']['O/P']=='O' else ("darkorange" if x['properties']['O/P']=='P' else "darkblue"),
                                             "weight": 2,
-                                         'color': "steelblue" if x['properties']['O/P']=='O' else "darkorange"}
+                                         'color': "steelblue" if x['properties']['O/P']=='O' else ("darkorange" if x['properties']['O/P']=='P' else "darkblue")}
             folium.GeoJson(data=dsc_map,style_function=style_function2,highlight_function =highlight_function2, tooltip=tooltip2).add_to(m)
 
         # call to render Folium map in Streamlit
