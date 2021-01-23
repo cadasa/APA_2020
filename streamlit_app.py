@@ -118,12 +118,13 @@ def apa2020(years):
             event_dict = altair_component(altair_chart=altair_bar())
         r = event_dict.get("Partners")
         PL_names = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
-        pl_map = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
-        field_info = pl_map
+#        pl_map = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
+        field_info = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
+        field_info['O/P'] = field_info['Operatorship_list']
         if r:
             field_info = df_pl.loc[(df_pl.loc[:,'Partners']==r[0]),:].reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
-            pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
+#            pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
         with st.beta_expander("EXPAND TO SEE DATA TABLE"):
             st.subheader(f"""**Data table showing all ownership**""")
             field_info.index = field_info.index + 1
