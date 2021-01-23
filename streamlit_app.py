@@ -72,12 +72,10 @@ def apa2020(years):
         df_pl = df_pl1
 
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
-    Partners_list = df_pl.groupby('PL')['Partners'].transform(lambda x: ",\n".join(x))
-    Operatorship_list = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x))
-    Percentage_list = df_pl.groupby('PL')['%'].transform(lambda x: ", ".join([str(x.to_list())]))
-    df_pl['Partners_list'] = Partners_list
-    df_pl['Operatorship_list'] = Operatorship_list
-    df_pl['Percentage_list'] = Percentage_list
+    df_pl['%']=df_pl['%'].astype(str)
+    df_pl['Companies'] = df_pl.groupby('PL')['Partners'].transform(lambda x: ",\n".join(x))
+    df_pl['Operatorships'] = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x))
+    df_pl['Percentages'] = df_pl.groupby('PL')['%'].transform(lambda x: "%, ".join(x))
 #    st.dataframe(df_pl)
 #    st.stop()
     plnames = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
@@ -128,7 +126,7 @@ def apa2020(years):
         with st.beta_expander("EXPAND TO SEE DATA TABLE"):
             st.subheader(f"""**Data table showing all ownership**""")
             field_info.index = field_info.index + 1
-            st.table(field_info[['PL','Block(s)','Partners_list','Operatorship_list','Percentage_list']])
+            st.table(field_info[['PL','Block(s)','Companies','Operatorships','Percentages']])
 
         with col1.beta_container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
@@ -166,7 +164,7 @@ def apa2020(years):
 
 #            folium_static(m)
 #            st.stop()
-            tooltip2 = folium.GeoJsonTooltip(fields=['PL', 'Partners_list', 'Operatorship_list','Percentage_list'],aliases=['PL','Companies','Ownerships','Percentages'],
+            tooltip2 = folium.GeoJsonTooltip(fields=['PL', 'Companies','Ownerships','Percentages'],
                                               labels=True,
                                               sticky=False,
                                               toLocaleString=False)
