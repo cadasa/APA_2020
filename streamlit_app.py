@@ -86,7 +86,7 @@ def apa2020(years):
     fields = col2.selectbox('Select Production Licences:',plnames)
     if fields == 'OVERVIEW':
         st.subheader(f"""**Ownership interests of {"".join(str(len(df_pl['PL'].unique())))} production licences have been offered to {"".join(str(len(df_pl['Partners'].unique())))} companies**""")
-        @st.cache()
+        @st.cache(allow_output_mutation=True)
         def altair_bar():
             pts = alt.selection_single(encodings=["y"], name="pts")
             return(
