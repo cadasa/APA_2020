@@ -143,7 +143,7 @@ def apa2020(years):
             dsc_map = gdf_pl.loc[gdf_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
             dsc_map = dsc_map.merge(field_info,"left",left_on='PL',right_on='PL',
                         indicator=False, validate='many_to_many')
-            centroid=dsc_map.geometry.centroid
+#            centroid=dsc_map.geometry.centroid
 #            dsc_map2 = dsc_map.iloc[0:1]
 #            st.table(dsc_map)
 #            if len(dsc_map2)!=0 :
@@ -152,8 +152,8 @@ def apa2020(years):
 #            lat = dsc_map2.center_point.map(lambda p: p.y)
 
     # center on the middle of the field
-            m = folium.Map(width=400,height=500,location=[centroid.y.mean(), centroid.x.mean()], tiles='cartodbpositron', zoom_start=4)
-#            m = folium.Map(width=400,height=500,location=[65.562, 17.704], tiles='cartodbpositron', zoom_start=4)
+#            m = folium.Map(width=400,height=500,location=[centroid.y.mean(), centroid.x.mean()], tiles='cartodbpositron', zoom_start=4)
+            m = folium.Map(width=400,height=500,location=[65.562, 17.704], tiles='cartodbpositron', zoom_start=4)
 
             style_function = lambda x: {'fillColor': "gray", "weight": 0.1, 'color': "gray"}
             highlight_function = lambda x: {'fillColor': "black", "weight": 0.1, 'color': "black"}
