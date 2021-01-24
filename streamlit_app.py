@@ -86,7 +86,7 @@ def apa2020(years):
     fields = col2.selectbox('Select Production Licences:',plnames)
     if fields == 'OVERVIEW':
         st.subheader(f"""**Ownership interests of {"".join(str(len(df_pl['PL'].unique())))} production licences have been offered to {"".join(str(len(df_pl['Partners'].unique())))} companies**""")
-        @st.cache(allow_output_mutation=True)
+        @st.cache()
         def altair_bar():
             pts = alt.selection_single(encodings=["y"], name="pts")
             return(
@@ -113,16 +113,17 @@ def apa2020(years):
         r = event_dict.get("Partners")
         PL_names = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
 #        pl_map = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
-        df_pl['%']=df_pl['%'].astype(str)
-        df_pl['Companies'] = df_pl.groupby('PL')['Partners'].transform(lambda x: ", ".join(x[1:]))
-        df_pl['Ownerships'] = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x[1:]))
-        df_pl['Percentages'] = df_pl.groupby('PL')['%'].transform(lambda x: ", ".join(x[1:]))
-        field_info = df_pl.loc[df_pl.loc[:,'O/P']=='O',:].reset_index(drop=True)
+        field_info = df_pl
+        field_info['%']=field_info['%'].astype(str)
+        field_info = field_info.rename(columns={"%": "Operator %","Partners": "Operator"})
+        field_info['Partner(s)'] = field_info.groupby('PL')['Operator'].transform(lambda x: ", ".join(x[1:]))
+        field_info['Partner(s) %'] = field_info.groupby('PL')['Operator %'].transform(lambda x: ", ".join(x[1:]))
+        field_info = field_info.loc[field_info.loc[:,'O/P']=='O',:].reset_index(drop=True)
         field_info['O/P'] = 'A'
         if r:
-            field_info_o = field_info.loc[field_info.loc[:,'Partners']==r[0],:].reset_index(drop=True)
+            field_info_o = field_info.loc[field_info.loc[:,'Operator']==r[0],:].reset_index(drop=True)
             field_info_o['O/P'] = 'O'
-            field_info_p = field_info.loc[field_info.loc[:,'Companies'].str.contains(r[0]),:].reset_index(drop=True)
+            field_info_p = field_info.loc[field_info.loc[:,'Partner(s)'].str.contains(r[0]),:].reset_index(drop=True)
             field_info_p['O/P'] = 'P'
             field_info = pd.concat([field_info_o,field_info_p],axis=0).reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
@@ -130,7 +131,7 @@ def apa2020(years):
         with st.beta_expander("EXPAND TO SEE DATA TABLE"):
             st.subheader(f"""**Data table showing all production licences**""")
             field_info.index = field_info.index + 1
-            st.table(field_info[['PL','Block(s)','Partners','%','Companies','Percentages']])
+            st.table(field_info[['PL','Block(s)','Operator','Operator %','Partner(s)','Partner(s) %']])
 
         with col1.beta_container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
@@ -168,10 +169,10 @@ def apa2020(years):
 
 #            folium_static(m)
 #            st.stop()
-            tooltip2 = folium.GeoJsonTooltip(fields=['PL','Partners','%', 'Companies','Percentages'],
+            tooltip2 = folium.GeoJsonTooltip(fields=['PL','Operator','Operator %', 'Partner(s)','Partner(s) %'],
                                               labels=True,
-                                              sticky=False,
-                                              toLocaleString=False)
+                                              sticky=True,
+                                              toLocaleString=True)
             style_function2 = lambda x: {'fillColor': "steelblue" if x['properties']['O/P']=='O' else ("orange" if x['properties']['O/P']=='P' else "blue"),
                                             "weight": 1,
                                          'color': "steelblue" if x['properties']['O/P']=='O' else ("orange" if x['properties']['O/P']=='P' else "blue")}
