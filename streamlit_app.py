@@ -72,6 +72,13 @@ def apa2020(years):
         df_pl = df_pl1
 
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
+    field_info = df_pl
+    field_info['%']=field_info['%'].astype(str)
+    field_info = field_info.rename(columns={"%": "Operator %","Partners": "Operator"})
+    field_info['Partner(s)'] = field_info.groupby('PL')['Operator'].transform(lambda x: ", ".join(x[1:]))
+    field_info['Partner(s) %'] = field_info.groupby('PL')['Operator %'].transform(lambda x: ", ".join(x[1:]))
+    field_info = field_info.loc[field_info.loc[:,'O/P']=='O',:].reset_index(drop=True)
+    field_info['O/P'] = 'A'
 #    st.dataframe(df_pl)
 #    st.stop()
     plnames = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
@@ -113,13 +120,7 @@ def apa2020(years):
         r = event_dict.get("Partners")
         PL_names = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
 #        pl_map = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
-        field_info = df_pl
-        field_info['%']=field_info['%'].astype(str)
-        field_info = field_info.rename(columns={"%": "Operator %","Partners": "Operator"})
-        field_info['Partner(s)'] = field_info.groupby('PL')['Operator'].transform(lambda x: ", ".join(x[1:]))
-        field_info['Partner(s) %'] = field_info.groupby('PL')['Operator %'].transform(lambda x: ", ".join(x[1:]))
-        field_info = field_info.loc[field_info.loc[:,'O/P']=='O',:].reset_index(drop=True)
-        field_info['O/P'] = 'A'
+
         if r:
             field_info_o = field_info.loc[field_info.loc[:,'Operator']==r[0],:].reset_index(drop=True)
             field_info_o['O/P'] = 'O'
