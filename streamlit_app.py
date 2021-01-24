@@ -117,12 +117,12 @@ def apa2020(years):
         df_pl['Companies'] = df_pl.groupby('PL')['Partners'].transform(lambda x: ", ".join(x[1:]))
         df_pl['Ownerships'] = df_pl.groupby('PL')['O/P'].transform(lambda x: ", ".join(x[1:]))
         df_pl['Percentages'] = df_pl.groupby('PL')['%'].transform(lambda x: ", ".join(x[1:]))
-        field_info = df_pl.loc[(df_pl.loc[:,'O/P']=='O'),:].reset_index(drop=True)
+        field_info = df_pl.loc[df_pl.loc[:,'O/P']=='O',:].reset_index(drop=True)
         field_info['O/P'] = 'A'
         if r:
-            field_info_o = field_info.loc[(field_info.loc[:,'Partners']==r[0]),:].reset_index(drop=True)
+            field_info_o = field_info.loc[field_info.loc[:,'Partners']==r[0],:].reset_index(drop=True)
             field_info_o['O/P'] = 'O'
-            field_info_p = field_info.loc[(r[0] in field_info.loc[:,'Companies']),:].reset_index(drop=True)
+            field_info_p = field_info.loc[r[0] in field_info.loc[:,'Companies'],:].reset_index(drop=True)
             field_info_p['O/P'] = 'P'
             field_info = pd.concat([field_info_o,field_info_p],axis=0).reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
