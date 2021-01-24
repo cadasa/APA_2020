@@ -168,7 +168,7 @@ def apa2020(years):
 
 #            folium_static(m)
 #            st.stop()
-            tooltip2 = folium.GeoJsonTooltip(fields=['PL','Partners','%' 'Companies','Percentages'],
+            tooltip2 = folium.GeoJsonTooltip(fields=['PL','Partners','%', 'Companies','Percentages'],
                                               labels=True,
                                               sticky=False,
                                               toLocaleString=False)
