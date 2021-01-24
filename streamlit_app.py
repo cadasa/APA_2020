@@ -129,10 +129,10 @@ def apa2020(years):
             field_info = pd.concat([field_info_o,field_info_p],axis=0).reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
 #            pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
-        with st.beta_expander("EXPAND TO SEE DATA TABLE"):
-            st.subheader(f"""**Data table showing all production licences**""")
-            field_info.index = field_info.index + 1
-            st.table(field_info[['PL','Block(s)','Operator','Operator %','Partner(s)','Partner(s) %']])
+#        with st.beta_expander("EXPAND TO SEE DATA TABLE"):
+        st.subheader(f"""**Data table showing all production licences**""")
+        field_info.index = field_info.index + 1
+        st.table(field_info[['PL','Block(s)','Operator','Operator %','Partner(s)','Partner(s) %']])
 
         with col1.beta_container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
