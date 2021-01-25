@@ -128,9 +128,11 @@ def apa2020(years):
             field_info_p['O/P'] = 'P'
             field_info = pd.concat([field_info_o,field_info_p],axis=0).reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
+            st.subheader(f"""**Data table showing all {"".join(str(field_info.index.max()+1))} production licences of {"".join(str(r[0]))}**""")
+        else:
 #            pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
 #        with st.beta_expander("EXPAND TO SEE DATA TABLE"):
-        st.subheader(f"""**Data table showing all production licences**""")
+            st.subheader(f"""**Data table showing all {"".join(str(field_info.index.max()+1))} production licences in APA-2020**""")
         field_info.index = field_info.index + 1
         st.table(field_info[['PL','Block(s)','Operator','Operator %','Partner(s)','Partner(s) %']])
 
