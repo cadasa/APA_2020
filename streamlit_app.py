@@ -132,7 +132,7 @@ def apa2020(years):
         else:
 #            pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
 #        with st.beta_expander("EXPAND TO SEE DATA TABLE"):
-            st.subheader(f"""**Data table showing all {"".join(str(field_info.index.max()+1))} production licences in {"".join(years)**""")
+            st.subheader(f"""**Data table showing all {"".join(str(field_info.index.max()+1))} production licences in {"".join(years)}**""")
         field_info.index = field_info.index + 1
         st.table(field_info[['PL','Block(s)','Operator','Operator %','Partner(s)','Partner(s) %']])
 
