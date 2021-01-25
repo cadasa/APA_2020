@@ -124,7 +124,7 @@ def apa2020(years):
         if r:
             field_info_o = field_info.loc[field_info.loc[:,'Operator']==r[0],:].reset_index(drop=True)
             field_info_o['O/P'] = 'O'
-            field_info_p = field_info.loc[field_info.loc[:,'Partner(s)'].str.contains(r[0]),:].reset_index(drop=True)
+            field_info_p = field_info.loc[(field_info.loc[:,'Partner(s)'].str.contains(r[0]))|(field_info.loc[:,'Partner(s)']==(r[0])),:].reset_index(drop=True)
             field_info_p['O/P'] = 'P'
             st.write(field_info.loc[58,'Partner(s)'])
             field_info = pd.concat([field_info_o,field_info_p],axis=0).reset_index(drop=True)
