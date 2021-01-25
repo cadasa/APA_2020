@@ -126,10 +126,8 @@ def apa2020(years):
             field_info_o['O/P'] = 'O'
             field_info_p = field_info.loc[(field_info.loc[:,'Partner(s)'].str.contains(r[0]))|(field_info.loc[:,'Partner(s)']==(r[0])),:].reset_index(drop=True)
             field_info_p['O/P'] = 'P'
-            st.write(field_info.loc[58,'Partner(s)'])
             field_info = pd.concat([field_info_o,field_info_p],axis=0).reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
-            st.write(r[0])
             st.subheader(f"""**Data table showing all {"".join(str(field_info.index.max()+1))} production licences of {"".join(str(r[0]))}**""")
         else:
 #            pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
