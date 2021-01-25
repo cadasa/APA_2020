@@ -126,7 +126,7 @@ def apa2020(years):
             field_info_o['O/P'] = 'O'
             field_info_p = field_info.loc[field_info.loc[:,'Partner(s)'].str.contains(r[0]),:].reset_index(drop=True)
             field_info_p['O/P'] = 'P'
-            st.write(field_info.loc[:,'Partner(s)'].to_list())
+            st.write(field_info.loc[58,'Partner(s)'].str)
             field_info = pd.concat([field_info_o,field_info_p],axis=0).reset_index(drop=True)
             PL_names = field_info['PL'].to_list()
             st.write(r[0])
