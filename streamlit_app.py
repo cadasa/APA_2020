@@ -108,7 +108,7 @@ def apa2020(years):
         #            size=alt.Size('Remaining_OE:Q', legend=alt.Legend(title='Remaining Reserves in MSM³OE',orient='bottom'),
         #                            scale=alt.Scale(range=[10, 1000]))
                 ).properties(title = 'PL Ownership per Companies',
-                    width=250,
+                    width=150,
                     height=465
                 ).add_selection(
                     pts
