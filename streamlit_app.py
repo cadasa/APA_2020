@@ -32,7 +32,7 @@ def read_fielddata():
 
 def main():
     st.sidebar.title("Navigation")
-    col1, col2,col3 = st.sidebar.beta_columns([0.5,9.0,0.5])
+    col1, col2,col3 = st.sidebar.columns([0.5,9.0,0.5])
     years = col2.select_slider("Slide to select:",options=['APA-2019', 'APA-2020'],value='APA-2020')
     if years == 'APA-2019':
         st.title("APA-2019: Awards in Predefined Areas 2019")
@@ -58,7 +58,7 @@ def main():
     return None
 
 def apa2020(years):
-    col1, col2,col3 = st.sidebar.beta_columns([0.5,9.0,0.5])
+    col1, col2,col3 = st.sidebar.columns([0.5,9.0,0.5])
     if years == 'APA-2019':
         gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2 = read_fielddata()
         gdf_pl = gdf_pl2
@@ -114,8 +114,8 @@ def apa2020(years):
                     pts
                 )
             )
-        col1, col2 = st.beta_columns([5,5])
-        with col2.beta_container():
+        col1, col2 = st.columns([5,5])
+        with col2.container():
             event_dict = altair_component(altair_chart=altair_bar())
         r = event_dict.get("Partners")
         PL_names = df_pl.drop_duplicates(subset = ['PL'])['PL'].to_list()
@@ -131,12 +131,12 @@ def apa2020(years):
             st.subheader(f"""**Data table showing all {"".join(str(field_info.index.max()+1))} production licences of {"".join(str(r[0]))}**""")
         else:
 #            pl_map = df_pl.loc[df_pl.loc[:,'PL'].isin(PL_names),:].reset_index(drop=True)
-#        with st.beta_expander("EXPAND TO SEE DATA TABLE"):
+#        with st.expander("EXPAND TO SEE DATA TABLE"):
             st.subheader(f"""**Data table showing all {"".join(str(field_info.index.max()+1))} production licences in {"".join(years)}**""")
         field_info.index = field_info.index + 1
         st.table(field_info[['PL','Block(s)','Operator','Operator %','Partner(s)','Partner(s) %']])
 
-        with col1.beta_container():
+        with col1.container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
 #            gdf_dsc2 = gdf_dsc
 #            gdf_dsc = gdf_dsc.loc[gdf_dsc.loc[:,'geometry']!=None,:]
@@ -198,22 +198,22 @@ def apa2020(years):
 #        st.stop()
 
     else:
-        col1, col2 = st.beta_columns([5,5])
+        col1, col2 = st.columns([5,5])
 
         col2.subheader(f"""**Production License {"" .join(str(fields))}'s info:**""")
-#        with col2.beta_expander("GENERAL", expanded = True):
+#        with col2.expander("GENERAL", expanded = True):
         field_info = df_pl.loc[(df_pl.loc[:,'PL']==fields),:].reset_index(drop=True)
         field_info.index = field_info.index + 1
 #        field_info = field_info.T
 #        col2.write(" ")
         col2.markdown(f"""**BLOCK(S):  {"".join(str(field_info['Block(s)'].to_list()[0]))}**""")
-        with col2.beta_expander("Operator & Partners:",expanded=True):
+        with col2.expander("Operator & Partners:",expanded=True):
             st.table(field_info[['Partners', 'O/P', '%']])
 #        st.stop()
 
         col1.subheader(f"""**Production License {"" .join(str(fields))}'s location**""")
 #        st.dataframe(df_dsc)
-        with col1.beta_container():
+        with col1.container():
 #            dsc_map = gdf_dsc.loc[(gdf_dsc.loc[:,'fieldName']==fields)&((gdf_dsc.loc[:,'curActStat']=='Producing')|(gdf_dsc.loc[:,'curActStat']=='Shut down')),:]
 #            gdf_dsc2 = gdf_dsc
 #            gdf_dsc = gdf_dsc.loc[gdf_dsc.loc[:,'geometry']!=None,:]
