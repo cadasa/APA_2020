@@ -28,22 +28,34 @@ def read_fielddata():
     df_pl2 = pd.read_excel('apa-2019-partners.xlsx', skiprows=[0])
     df_pl2 = df_pl2.rename(columns={"Blocks": "Block(s)"})
     df_pl2['PL']=df_pl2['PL'].astype(str)
-    return (gdf_dsc,gdf_pl,df_pl,gdf_pl2,df_pl2)
+
+    gdf_pl3 = gpd.read_file("APA2021_offered.shp")
+    gdf_pl3 = gdf_pl3.loc[gdf_pl3.loc[:,'geometry']!=None,:]
+    gdf_pl3['PL'] = gdf_pl3['PL_nr']
+    df_pl3 = pd.read_excel('apa2021_partners.xlsx')
+    return (gdf_dsc,gdf_pl,df_pl,gdf_pl2,df_pl2,gdf_pl3,df_pl3)
 
 def main():
     st.sidebar.title("Navigation")
     col1, col2,col3 = st.sidebar.columns([0.5,9.0,0.5])
-    years = col2.select_slider("Slide to select:",options=['APA-2019', 'APA-2020'],value='APA-2020')
+    years = col2.select_slider("Slide to select:",options=['APA-2019', 'APA-2020', 'APA-2021'],value='APA-2021')
     if years == 'APA-2019':
         st.title("APA-2019: Awards in Predefined Areas 2019")
         col2.info(
                         '👉 Click on each company to see all of its APA-2019 PL.'
                         ' Individual PL can be viewed using the select-box below.')
         apa2020(years)
-    else:
+    else if years == 'APA-2020':
         st.title("APA-2020: Awards in Predefined Areas 2020")
         col2.info(
                         '👉 Click on each company to see all of its APA-2020 PL.'
+                        ' Individual PL can be viewed using the select-box below.')
+        apa2020(years)
+
+    else:
+        st.title("APA-2021: Awards in Predefined Areas 2020")
+        col2.info(
+                        '👉 Click on each company to see all of its APA-2021 PL.'
                         ' Individual PL can be viewed using the select-box below.')
         apa2020(years)
 
@@ -51,7 +63,7 @@ def main():
         "**Made with [NORDLYS](https://share.streamlit.io/cadasa/nordlys)**"
         )
     st.sidebar.markdown(
-        "**Based on data from [NPD](https://www.npd.no/en/facts/production-licences/licensing-rounds/apa-2020/)**"
+        "**Based on data from [NPD](https://www.npd.no/en/facts/production-licences/licensing-rounds/apa-2021/)**"
         )
     st.sidebar.markdown(
         "**Created by [KHANH NGUYEN](mailto:khanhduc@gmail.com)**")
@@ -60,16 +72,21 @@ def main():
 def apa2020(years):
     col1, col2,col3 = st.sidebar.columns([0.5,9.0,0.5])
     if years == 'APA-2019':
-        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2 = read_fielddata()
+        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3 = read_fielddata()
         gdf_pl = gdf_pl2
         df_pl = df_pl2
 #        st.dataframe(df_pl)
 #        st.dataframe(df_pl1)
 #        st.stop
-    else:
-        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2 = read_fielddata()
+    else if years == 'APA-2020':
+        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3 = read_fielddata()
         gdf_pl = gdf_pl1
         df_pl = df_pl1
+
+    else:
+        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3 = read_fielddata()
+        gdf_pl = gdf_pl3
+        df_pl = df_pl3
 
     df_pl = df_pl.loc[df_pl.loc[:,'O/P'].notnull(),:].reset_index(drop=True)
     field_info = df_pl
