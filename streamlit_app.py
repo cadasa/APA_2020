@@ -295,7 +295,7 @@ def _max_width_():
 
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="APA-2020", page_icon='logo.jpg', layout='wide', initial_sidebar_state='auto')
+    st.set_page_config(page_title="APA-2021", page_icon='logo.jpg', layout='wide', initial_sidebar_state='auto')
     _max_width_()
 
     main()
