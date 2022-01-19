@@ -45,7 +45,7 @@ def main():
                         '👉 Click on each company to see all of its APA-2019 PL.'
                         ' Individual PL can be viewed using the select-box below.')
         apa2020(years)
-    else if years == 'APA-2020':
+    elif years == 'APA-2020':
         st.title("APA-2020: Awards in Predefined Areas 2020")
         col2.info(
                         '👉 Click on each company to see all of its APA-2020 PL.'
@@ -78,7 +78,7 @@ def apa2020(years):
 #        st.dataframe(df_pl)
 #        st.dataframe(df_pl1)
 #        st.stop
-    else if years == 'APA-2020':
+    elif years == 'APA-2020':
         gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3 = read_fielddata()
         gdf_pl = gdf_pl1
         df_pl = df_pl1
