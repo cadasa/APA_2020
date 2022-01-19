@@ -53,7 +53,7 @@ def main():
         apa2020(years)
 
     else:
-        st.title("APA-2021: Awards in Predefined Areas 2020")
+        st.title("APA-2021: Awards in Predefined Areas 2021")
         col2.info(
                         '👉 Click on each company to see all of its APA-2021 PL.'
                         ' Individual PL can be viewed using the select-box below.')
