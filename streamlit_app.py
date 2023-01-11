@@ -85,24 +85,24 @@ def main():
 def apa2020(years):
     col1, col2,col3 = st.sidebar.columns([0.5,9.0,0.5])
     if years == 'APA-2019':
-        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3 = read_fielddata()
+        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3,gdf_pl4,df_pl4 = read_fielddata()
         gdf_pl = gdf_pl2
         df_pl = df_pl2
 #        st.dataframe(df_pl)
 #        st.dataframe(df_pl1)
 #        st.stop
     elif years == 'APA-2020':
-        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3 = read_fielddata()
+        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3,gdf_pl4,df_pl4 = read_fielddata()
         gdf_pl = gdf_pl1
         df_pl = df_pl1
 
     elif years == 'APA-2022':
-        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3 = read_fielddata()
+        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3,gdf_pl4,df_pl4 = read_fielddata()
         gdf_pl = gdf_pl4
         df_pl = df_pl4
 
     else:
-        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3 = read_fielddata()
+        gdf_dsc,gdf_pl1,df_pl1,gdf_pl2,df_pl2,gdf_pl3,df_pl3,gdf_pl4,df_pl4 = read_fielddata()
         gdf_pl = gdf_pl3
         df_pl = df_pl3
 
