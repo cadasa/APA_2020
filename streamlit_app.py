@@ -36,7 +36,7 @@ def read_fielddata():
 
     gdf_pl4 = gpd.read_file("APA2022_offered.shp")
     gdf_pl4 = gdf_pl4.loc[gdf_pl4.loc[:,'geometry']!=None,:]
-    gdf_pl4['PL'] = gdf_pl4['PL_nr']
+    gdf_pl4['PL'] = gdf_pl4['PL_no']
     df_pl4 = pd.read_excel('apa2022_partners.xlsx')
     return (gdf_dsc,gdf_pl,df_pl,gdf_pl2,df_pl2,gdf_pl3,df_pl3,gdf_pl4,df_pl4)
 
